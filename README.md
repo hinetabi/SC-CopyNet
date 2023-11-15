@@ -19,11 +19,15 @@ $ pip install -r requirements.txt
 # Running instructions
 
 ## 1. Build vocab
-`If vocab is existed, can be loaded by using file.`
-
+`If vocab is existed, can be loaded by using file (do not need to build again).`
+```bash
+$ sh tests/scripts/test_build_vocab.sh
+```
 ## 2. Trains
-
-## 3. Benchmark
+```bash
+$ sh tests/scripts/test_sample_train.sh
+```
+## 3. Benchmark (developing)
 Set up logging with [wandb.io](https://wandb.ai/site)
 
-## 4. Interaction with model
+## 4. Interaction with model (developing)
