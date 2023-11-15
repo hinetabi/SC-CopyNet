@@ -4,7 +4,7 @@ from torch.utils.data import Dataset
 from util.utils import tokenize
 from torchtext.vocab import Vocab
 
-class CustomDataset(Dataset):
+class ViDataset(Dataset):
     """Generate dataset from source path, target path and vocab (torchtext)
     """
     def __init__(self, vocab: Vocab, src_path: str, tgt_path: str) -> None:
@@ -17,7 +17,6 @@ class CustomDataset(Dataset):
             self.raw_tgt_iter = f.readlines()
             
         assert len(self.raw_src_iter) == len(self.raw_tgt_iter), "Source and Target file should have the same length."
-        print(self.raw_src_iter)
 
     def __len__(self):
         return len(list(self.raw_src_iter))
