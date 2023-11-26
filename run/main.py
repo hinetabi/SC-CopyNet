@@ -9,7 +9,7 @@ import torchtext
 
 # set path
 import sys
-sys.path.append('/content/SC-CopyNet/')
+sys.path.append('./')
 
 from seq2seq.optim import Optimizer
 from seq2seq.trainer import SupervisedTrainer
@@ -142,8 +142,6 @@ else:
     scheduler = StepLR(optimizer.optimizer, 1)
     optimizer.set_scheduler(scheduler)
     
-
-
     # train
     t = SupervisedTrainer(loss=loss, batch_size=opt.batch_size,
                           checkpoint_every=50,
