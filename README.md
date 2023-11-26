@@ -25,7 +25,7 @@ $ sh tests/scripts/test_build_vocab.sh
 ```
 ## 2. Trains
 ```bash
-$ sh tests/scripts/test_sample_train.sh
+$ sh run_script/train.sh
 ```
 ## 3. Benchmark (developing)
 Set up logging with [wandb.io](https://wandb.ai/site)

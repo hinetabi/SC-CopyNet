@@ -1,5 +1,5 @@
-from dataset.dataset import ViDataset
-from dataset.vocab import VietVocab
+from seq2seq.dataset.dataset import ViDataset
+from seq2seq.dataset.vocab import VietVocab
 
 vi_vocab = VietVocab()
 vi_vocab.load_vocab(save_file="tests/data/vocab.pth")

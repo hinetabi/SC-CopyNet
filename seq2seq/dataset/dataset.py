@@ -1,7 +1,7 @@
 import torch
 import io
 from torch.utils.data import Dataset
-from util.utils import tokenize
+from seq2seq.util.utils import tokenize
 from torchtext.vocab import Vocab
 
 class ViDataset(Dataset):

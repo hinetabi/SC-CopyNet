@@ -4,7 +4,7 @@ from torchtext.vocab import vocab, Vocab
 import io
 import argparse
 import logging
-from util.utils import tokenize
+from seq2seq.util.utils import tokenize
 
 class VietVocab(object):
     """

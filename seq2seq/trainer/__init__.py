@@ -1,0 +1,1 @@
+from seq2seq.trainer.trainer import SupervisedTrainer

@@ -6,10 +6,10 @@ from torch.optim.lr_scheduler import StepLR
 from torch.utils.data import DataLoader
 import torch.nn as nn
 import torch.optim as optim
-from dataset.vocab import VietVocab
-from dataset.dataset import ViDataset
-from model import GRUEncoder, GRUDecoder, Attention, Seq2Seq
-from util.utils import generate_batch, init_weights, count_parameters
+from seq2seq.dataset.vocab import VietVocab
+from seq2seq.dataset.dataset import ViDataset
+from seq2seq.model import GRUEncoder, GRUDecoder, Attention, Seq2Seq
+from seq2seq.util.utils import generate_batch, init_weights, count_parameters
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--src-train-path', action='store', dest='src_train_path',required=True,
@@ -131,7 +131,7 @@ def evaluate(model, iterator, criterion):
     model.eval()
 
     epoch_loss = 0
-
+    print(f"iterator = {iterator}")
     with torch.no_grad():
 
         for i, batch in enumerate(iterator):
@@ -167,11 +167,6 @@ def epoch_time(start_time, end_time):
 
 # from torchtext.data import BucketIterator
 BATCH_SIZE = 4
-
-# train_iterator, valid_iterator, test_iterator = BucketIterator.splits(
-#     (train_data, val_data, test_data),
-#     batch_size = BATCH_SIZE,
-#     device = device)
 
 train_iterator, valid_iterator, test_iterator = train_iter, valid_iter, test_iter
 
