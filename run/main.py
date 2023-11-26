@@ -7,6 +7,10 @@ from torch.utils.data import DataLoader
 from torch.optim.lr_scheduler import StepLR
 import torchtext
 
+# set path
+import sys
+sys.path.append('/content/SC-CopyNet/')
+
 from seq2seq.optim import Optimizer
 from seq2seq.trainer import SupervisedTrainer
 from seq2seq.model import GRUDecoder, GRUEncoder, Attention, Seq2Seq
