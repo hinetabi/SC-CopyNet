@@ -9,8 +9,11 @@ import torchtext
 from torch import optim
 from torch.nn import CrossEntropyLoss
 from torch.utils.data import DataLoader
+
 from seq2seq.evaluator import Evaluator
 from seq2seq.util.checkpoint import Checkpoint
+
+import wandb
 
 class SupervisedTrainer(object):
     """ The SupervisedTrainer class helps in setting up a training framework in a
@@ -47,6 +50,7 @@ class SupervisedTrainer(object):
         self.batch_size = batch_size
 
         self.logger = logging.getLogger(__name__)
+        
 
     def _train_batch(self, model, src, trg, clip = 1):
         model.train()
@@ -119,7 +123,8 @@ class SupervisedTrainer(object):
                         self.loss.name,
                         print_loss_avg)
                     log.info(log_msg)
-
+                    
+                    wandb.log({"avg_train_loss": print_loss_avg})
                 # Checkpoint
                 if step % self.checkpoint_every == 0 or step == total_steps:
                     Checkpoint(model=model,
@@ -135,12 +140,16 @@ class SupervisedTrainer(object):
             log_msg = "Finished epoch %d: Train %s: %.4f" % (epoch, self.loss.name, epoch_loss_avg)
             if val_iter is not None:
                 try:
-                    dev_loss = self.evaluator.evaluate(model, val_iter)
+                    self.evaluator.pad_idx = vi_vocab['<pad>']
+                    dev_loss, acc = self.evaluator.evaluate(model, val_iter)
                 except:
                     import traceback
                     traceback.print_exc()
                 self.optimizer.update(dev_loss, epoch)
-                log_msg += ", Dev %s: %.4f" % (self.loss.name, dev_loss)
+                log_msg += ", Dev %s: %.4f, Accuracy %.4f" % (self.loss.name, dev_loss, acc)
+                # log metrics to wandb
+                wandb.log({"acc": acc, "avg_val_loss": dev_loss})
+                
                 model.train(mode=True)
             else:
                 self.optimizer.update(epoch_loss_avg, epoch)

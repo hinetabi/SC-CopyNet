@@ -1,3 +1,4 @@
 # pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 torchtext==0.16.0
 dill==0.3.7
+wandb==0.16.0

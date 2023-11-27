@@ -29,5 +29,7 @@ $ sh run_script/train.sh
 ```
 ## 3. Benchmark (developing)
 Set up logging with [wandb.io](https://wandb.ai/site)
-
+```bash
+$ wandb login 5d8018cfea10e827e71a6c0ecf6247a443473c27
+```
 ## 4. Interaction with model (developing)

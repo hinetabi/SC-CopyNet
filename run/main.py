@@ -1,6 +1,7 @@
 import os
 import argparse
 import logging
+import wandb
 
 import torch
 from torch.utils.data import DataLoader
@@ -14,7 +15,7 @@ sys.path.append('./')
 from seq2seq.optim import Optimizer
 from seq2seq.trainer import SupervisedTrainer
 from seq2seq.model import GRUDecoder, GRUEncoder, Attention, Seq2Seq
-from seq2seq.loss import Perplexity
+from seq2seq.loss import Perplexity, CrossEntropyLoss
 from seq2seq.dataset.dataset import ViDataset
 from seq2seq.dataset.vocab import VietVocab
 from seq2seq.evaluator.predictor import Predictor
@@ -61,6 +62,8 @@ parser.add_argument('--log-level', dest='log_level',
                     help='Logging level.')
 
 opt = parser.parse_args()
+opt.batch_size = int(opt.batch_size)
+opt.num_epochs = int(opt.num_epochs)
 
 LOG_FORMAT = '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
 logging.basicConfig(format=LOG_FORMAT, level=getattr(logging, opt.log_level.upper()))
@@ -121,7 +124,7 @@ else:
     # torch.nn.CrossEntropyLoss(ignore_index = TRG_PAD_IDX)
     weight = torch.ones(len(vi_vocab.vocab))
     pad = TRG_PAD_IDX
-    loss = Perplexity(weight, pad)
+    loss = CrossEntropyLoss(weight, pad)
     if torch.cuda.is_available():
         loss.cuda()
 
@@ -146,9 +149,12 @@ else:
     t = SupervisedTrainer(loss=loss, batch_size=opt.batch_size,
                           checkpoint_every=50,
                           print_every=10, expt_dir=opt.expt_dir)
-
+    
+    # Initialize WandB
+    wandb.init(project='spelling-error-correction', config={})
     model = t.train(model, train_iter,
                       vi_vocab=vi_vocab,
                       num_epochs=opt.num_epochs, 
                       val_iter=val_iter,
                       optimizer=optimizer)
+    wandb.finish()
