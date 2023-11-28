@@ -57,6 +57,9 @@ parser.add_argument('--num-epochs', action='store', dest='num_epochs', default=5
 parser.add_argument('--load-checkpoint', action='store', dest='load_checkpoint',required=False, default=None,
                     help='Path to load last checkpoint.')
 
+parser.add_argument('--checkpoint-every', action='store', dest='checkpoint_every',required=False, default=1000,
+                    help='Path to load last checkpoint.')
+
 parser.add_argument('--log-level', dest='log_level',
                     default='info',
                     help='Logging level.')
@@ -64,6 +67,7 @@ parser.add_argument('--log-level', dest='log_level',
 opt = parser.parse_args()
 opt.batch_size = int(opt.batch_size)
 opt.num_epochs = int(opt.num_epochs)
+opt.checkpoint_every = int(opt.checkpoint_every)
 
 LOG_FORMAT = '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
 logging.basicConfig(format=LOG_FORMAT, level=getattr(logging, opt.log_level.upper()))
@@ -147,7 +151,7 @@ else:
     
     # train
     t = SupervisedTrainer(loss=loss, batch_size=opt.batch_size,
-                          checkpoint_every=1000,
+                          checkpoint_every=opt.checkpoint_every,
                           print_every=100, expt_dir=opt.expt_dir)
     
     # Initialize WandB
