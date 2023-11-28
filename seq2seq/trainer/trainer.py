@@ -77,8 +77,12 @@ class SupervisedTrainer(object):
         torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
         
         self.optimizer.step()
-
-        return loss.item()
+        
+        loss_item = loss.item()
+        del output
+        del loss
+        
+        return loss_item
 
     def _train_epoches(self, train_iter, model, n_epochs, start_epoch, start_step, vi_vocab,
                        val_iter=None):

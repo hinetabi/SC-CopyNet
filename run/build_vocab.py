@@ -20,6 +20,8 @@ if __name__ == "__main__":
 
     
     opt = parser.parse_args()
+    opt.min_vocab = int(opt.min_vocab)
+    
     LOG_FORMAT = '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
     logging.basicConfig(format=LOG_FORMAT, level=logging.INFO)
     logging.info(opt)

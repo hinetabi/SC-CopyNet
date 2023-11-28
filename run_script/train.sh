@@ -1,11 +1,14 @@
 #! /bin/sh
 
-SOURCE_TRAIN_FILE=tests/data/src.txt
-TARGET_TRAIN_FILE=tests/data/tgt.txt
+SOURCE_TRAIN_FILE=/home/hinetabi/Documents/university/data/sample/data/train_src.txt
+TARGET_TRAIN_FILE=/home/hinetabi/Documents/university/data/sample/data/train_tgt.txt
+SOURCE_VAL_FILE=/home/hinetabi/Documents/university/data/sample/data/val_src.txt
+TARGET_VAL_FILE=/home/hinetabi/Documents/university/data/sample/data/val_tgt.txt
+
 VOCAB_FILE=tests/data/vocab.pth
 CHECKPOINT_DIR=/home/hinetabi/Documents/university/copynet/SC-CopyNet/experiment/checkpoints
 EXPT_PATH=/home/hinetabi/Documents/university/copynet/SC-CopyNet/experiment
-BATCH_SIZE=32
+BATCH_SIZE=1
 NUM_EPOCHS=100
 
 export PYTHONPATH=./

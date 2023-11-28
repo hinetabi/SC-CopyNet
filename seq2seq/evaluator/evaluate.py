@@ -60,17 +60,11 @@ class Evaluator(object):
                 epoch_loss += loss.item()
                 
                 # Calculate accuracy
-                # predictions = torch.argmax(output, dim=1)
-                # correct_predictions += torch.sum(predictions == trg).item()
-                # total_predictions += trg.numel()
-                # Ignore padding tokens
-                non_padding_tokens = (trg != self.pad_idx)
                 predictions = torch.argmax(output, dim=1)
-
-                correct_predictions += torch.sum(predictions[non_padding_tokens] == trg[non_padding_tokens]).item()
-                total_predictions += torch.sum(non_padding_tokens).item()
+                correct_predictions += torch.sum(predictions == trg).item()
+                total_predictions += trg.numel()
+                del output
+                del loss
                 
-        # accuracy = correct_predictions / total_predictions
-        accuracy = correct_predictions / total_predictions if total_predictions > 0 else 0.0
-        # return self.loss.get_loss()
+        accuracy = correct_predictions / total_predictions
         return epoch_loss / len(iterator), accuracy
