@@ -124,7 +124,7 @@ class SupervisedTrainer(object):
                         print_loss_avg)
                     log.info(log_msg)
                     
-                    wandb.log({"avg_train_loss": print_loss_avg})
+                    wandb.log({"avg_train_loss_iter": print_loss_avg})
                 # Checkpoint
                 if step % self.checkpoint_every == 0 or step == total_steps:
                     Checkpoint(model=model,
@@ -138,13 +138,15 @@ class SupervisedTrainer(object):
             epoch_loss_avg = epoch_loss_total / min(steps_per_epoch, step - start_step)
             epoch_loss_total = 0
             log_msg = "Finished epoch %d: Train %s: %.4f" % (epoch, self.loss.name, epoch_loss_avg)
+            wandb.log({"avg_train_loss_epoch": epoch_loss_avg})
+            
             if val_iter is not None:
                 self.evaluator.pad_idx = vi_vocab['<pad>']
                 dev_loss, acc = self.evaluator.evaluate(model, val_iter)
                 self.optimizer.update(dev_loss, epoch)
                 log_msg += ", Dev %s: %.4f, Accuracy %.4f" % (self.loss.name, dev_loss, acc)
                 # log metrics to wandb
-                wandb.log({"acc": acc, "avg_val_loss": dev_loss})
+                wandb.log({"avg_val_acc_epoch": acc, "avg_val_loss_epoch": dev_loss})
                 
                 model.train(mode=True)
             else:
