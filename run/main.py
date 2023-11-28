@@ -147,8 +147,8 @@ else:
     
     # train
     t = SupervisedTrainer(loss=loss, batch_size=opt.batch_size,
-                          checkpoint_every=50,
-                          print_every=10, expt_dir=opt.expt_dir)
+                          checkpoint_every=1000,
+                          print_every=100, expt_dir=opt.expt_dir)
     
     # Initialize WandB
     wandb.init(project='spelling-error-correction', config={})

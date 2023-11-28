@@ -28,7 +28,7 @@ class SupervisedTrainer(object):
     """
     def __init__(self, expt_dir, loss=CrossEntropyLoss(), batch_size=64,
                  random_seed=None,
-                 checkpoint_every=100, print_every=100,):
+                 checkpoint_every=1000, print_every=100,):
 
         self._trainer = "Seq2Seq Trainer"
         self.random_seed = random_seed
