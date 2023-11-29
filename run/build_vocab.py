@@ -30,5 +30,6 @@ if __name__ == "__main__":
     vi_vocab = VietVocab(source_file=opt.source_file)
     vi_vocab.build_vocab(min_freq=opt.min_vocab)
     vi_vocab.save_vocab(save_file=opt.save_file)
-    
     logger.info(f"Vocab = {vi_vocab.get_vocab().get_itos()}")
+    logger.info(f"There are {len(vi_vocab.get_vocab().get_itos())} vocab")
+    

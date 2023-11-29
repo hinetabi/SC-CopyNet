@@ -122,7 +122,7 @@ class SupervisedTrainer(object):
                 if step % self.print_every == 0 and step_elapsed > self.print_every:
                     print_loss_avg = print_loss_total / self.print_every
                     print_loss_total = 0
-                    log_msg = 'Progress: %d%%, Train %s: %.4f' % (
+                    log_msg = 'Progress: %.0f%%, Train %s: %.4f' % (
                         step / total_steps * 100,
                         self.loss.name,
                         print_loss_avg)
