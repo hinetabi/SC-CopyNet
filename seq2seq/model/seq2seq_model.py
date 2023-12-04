@@ -32,8 +32,10 @@ class Seq2Seq(nn.Module):
         #first input to the decoder is the <sos> tokens
         input = trg[0,:]
 
+        # m -> n (trg = src) -> m(src) - n(src)
         for t in range(1, trg_len):
-
+        # while input != EOS: ??? 
+        
             #insert input token embedding, previous hidden state and all encoder hidden states
             #receive output tensor (predictions) and new hidden state
             output, hidden = self.decoder(input, hidden, encoder_outputs)

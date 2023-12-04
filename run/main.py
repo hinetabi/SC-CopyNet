@@ -7,6 +7,7 @@ import torch
 from torch.utils.data import DataLoader
 from torch.optim.lr_scheduler import StepLR
 import torchtext
+import bitsandbytes as bnb
 
 # set path
 import sys
@@ -145,7 +146,7 @@ else:
     logging.info(f'The model has {count_parameters(model):,} trainable parameters')
 
     # create optimizer
-    optimizer = Optimizer(torch.optim.Adam(model.parameters()), max_grad_norm=5)
+    optimizer = Optimizer(bnb.optim.Adam(model.parameters()), max_grad_norm=5)
     scheduler = StepLR(optimizer.optimizer, 1)
     optimizer.set_scheduler(scheduler)
     

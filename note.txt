@@ -1,0 +1,47 @@
+
+
+
+
+
+
+Note buoi hop:
+	Paper: 
+		- Trinh bay lai ve y tuong (approach) -> noi huong di + cac cai rut ra duoc.
+		- Progress - plan cua minh dang the nao
+		- Issue hien tai:
+			+ Model out of memory -> hoi thay tu van. (1 layers GRU)
+		-> Nho thay tu van.
+		- Plan cua minh = giua/cuoi thang 12 thi thay` thay' the nao? Kip hay khong?
+
+	Do an: 
+		- Ap dung bai nay vao do an.
+		- Nho thay tu van ve y tuong do an.
+		- Issue:
+			+ Bai toan cu (co phai diem tru khong) -> Vi muc tieu muon co diem cao nhat.			
+						
+						
+		
+Literal review có abc -> xong lam.
+
+File sửa lỗi chính tả -> vì 
+Phần đầu quan trọng nhất.
+			
+Motivation cho bai toan cua minh <- Tu 1 paper khac.
+
+Xuất phát motivation từ bài moi nhat cua hoi nghi tieng Viet.
+-> Vấn đề out of vocab -> tìm các giải pháp để handle OOV -> thử nghiệm để handle.
+
+-> So sánh các hướng xử lý out of vocab với nhau (chỉ cho tiếng việt) xem cách nào hay. (2-3 cái đưa ra)
+
+- Performance của các cách sửa lỗi chính tả khác thì chỉ đưa ra con số.
+
+Chứng minh được là có thêm OOV sẽ tốt hơn khi chưa có.
+
+			
+
+			
+Lịch trình:
+15/01 - deadline 1 cái: https://icaisc.eu/ 
+
+
+			

@@ -53,8 +53,6 @@ class SupervisedTrainer(object):
         
 
     def _train_batch(self, model, src, trg, clip = 1):
-        model.train()
-
         self.optimizer.optimizer.zero_grad()
 
         output = model(src, trg)
