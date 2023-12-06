@@ -16,7 +16,7 @@ class CrossEntropyLoss(Loss):
 
     _NAME = "Avg CrossEntropyLoss"
 
-    def __init__(self, weight=None, mask=None, size_average=True):
+    def __init__(self, weight=None, mask=None, size_average=True, TRG_PAD_IDX=0):
         self.mask = mask
         self.size_average = size_average
         if mask is not None:
@@ -26,7 +26,7 @@ class CrossEntropyLoss(Loss):
 
         super(CrossEntropyLoss, self).__init__(
             self._NAME,
-            nn.CrossEntropyLoss(weight=weight, size_average=size_average))
+            nn.CrossEntropyLoss(weight=weight, size_average=size_average, ignore_index=TRG_PAD_IDX))
 
     def get_loss(self):
         if isinstance(self.acc_loss, int):
@@ -37,6 +37,9 @@ class CrossEntropyLoss(Loss):
             # average loss per batch
             loss /= self.norm_term
         return loss
+    
+    def to(self, device):
+        self.criterion.to(device)
 
     def eval_batch(self, outputs, target):
         self.acc_loss += self.criterion(outputs, target)

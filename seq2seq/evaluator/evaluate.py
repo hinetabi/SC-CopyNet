@@ -39,10 +39,9 @@ class Evaluator(object):
         with torch.no_grad():
             for i, batch in enumerate(iterator):
 
-                src = batch[0]
-                trg = batch[1]
+                src, src_len, trg = batch
 
-                output = model(src, trg, 0) #turn off teacher forcing
+                output = model(src=src, src_len=src_len, trg=trg, teacher_forcing_ratio=0) #turn off teacher forcing
 
                 #trg = [trg len, batch size]
                 #output = [trg len, batch size, output dim]

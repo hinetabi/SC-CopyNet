@@ -16,11 +16,12 @@ class GRUDecoder(nn.Module):
 
         self.dropout = nn.Dropout(dropout)
 
-    def forward(self, input, hidden, encoder_outputs):
+    def forward(self, input, hidden, encoder_outputs, mask):
 
         #input = [batch size]
         #hidden = [batch size, dec hid dim]
         #encoder_outputs = [src len, batch size, enc hid dim * 2]
+        #mask = [batch size, src len]
 
         input = input.unsqueeze(0)
 
@@ -30,7 +31,7 @@ class GRUDecoder(nn.Module):
 
         #embedded = [1, batch size, emb dim]
 
-        a = self.attention(hidden, encoder_outputs)
+        a = self.attention(hidden, encoder_outputs, mask)
 
         #a = [batch size, src len]
 
@@ -73,4 +74,4 @@ class GRUDecoder(nn.Module):
 
         #prediction = [batch size, output dim]
 
-        return prediction, hidden.squeeze(0)
+        return prediction, hidden.squeeze(0), a.squeeze(1)

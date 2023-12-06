@@ -9,7 +9,7 @@ class Attention(nn.Module):
         self.attn = nn.Linear((enc_hid_dim * 2) + dec_hid_dim, dec_hid_dim)
         self.v = nn.Linear(dec_hid_dim, 1, bias = False)
 
-    def forward(self, hidden, encoder_outputs):
+    def forward(self, hidden, encoder_outputs, mask):
 
         #hidden = [batch size, dec hid dim]
         #encoder_outputs = [src len, batch size, enc hid dim * 2]
@@ -31,7 +31,8 @@ class Attention(nn.Module):
 
         attention = self.v(energy).squeeze(2)
 
-        #attention= [batch size, src len]
+        #attention = [batch size, src len]
+        attention = attention.masked_fill(mask == 0, -1e10)
 
         return F.softmax(attention, dim=1)
     

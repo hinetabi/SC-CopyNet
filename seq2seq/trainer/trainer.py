@@ -52,10 +52,13 @@ class SupervisedTrainer(object):
         self.logger = logging.getLogger(__name__)
         
 
-    def _train_batch(self, model, src, trg, clip = 1):
-        self.optimizer.optimizer.zero_grad()
-
-        output = model(src, trg)
+    def _train_batch(self, model, src, src_len, trg, clip = 1):
+        self.optimizer.optimizer.zero_grad(set_to_none=True)
+        
+        # for param in model.parameters():
+        #     param.grad = None
+            
+        output = model(src=src, src_len=src_len, trg=trg)
 
         #trg = [trg len, batch size]
         #output = [trg len, batch size, output dim]
@@ -77,8 +80,12 @@ class SupervisedTrainer(object):
         self.optimizer.step()
         
         loss_item = loss.item()
+        model.encoder.zero_grad()
+        model.decoder.zero_grad()
         del output
         del loss
+        del src
+        del trg
         
         return loss_item
 
@@ -108,10 +115,8 @@ class SupervisedTrainer(object):
                 step += 1
                 step_elapsed += 1
 
-                src = batch[0]
-                trg = batch[1]
-                
-                loss = self._train_batch(model, src, trg, clip=1)
+                src, src_len, trg = batch
+                loss = self._train_batch(model, src, src_len, trg, clip=1)
 
                 # Record average loss
                 print_loss_total += loss
@@ -183,6 +188,10 @@ class SupervisedTrainer(object):
 
         self.logger.info("Optimizer: %s, Scheduler: %s" % (self.optimizer.optimizer, self.optimizer.scheduler))
 
+        # set 
+        torch.autograd.profiler.emit_nvtx(enabled=False)
+        torch.autograd.set_detect_anomaly(False)
+        
         self._train_epoches(train_iter, model, num_epochs,
                             start_epoch, step, val_iter=val_iter,vi_vocab=vi_vocab)
                             

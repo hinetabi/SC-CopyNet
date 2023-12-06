@@ -127,11 +127,9 @@ else:
 
     # loss function
     # torch.nn.CrossEntropyLoss(ignore_index = TRG_PAD_IDX)
-    weight = torch.ones(len(vi_vocab.vocab))
-    pad = TRG_PAD_IDX
-    loss = CrossEntropyLoss(weight, pad)
-    if torch.cuda.is_available():
-        loss.cuda()
+    weight = torch.ones(len(vi_vocab.vocab), device=device)
+    loss = CrossEntropyLoss(weight, TRG_PAD_IDX=TRG_PAD_IDX)
+    loss.to(device)
 
     model = None
     optimizer = None
@@ -140,13 +138,13 @@ else:
     enc = GRUEncoder(INPUT_DIM, ENC_EMB_DIM, ENC_HID_DIM, DEC_HID_DIM, ENC_DROPOUT)
     dec = GRUDecoder(OUTPUT_DIM, DEC_EMB_DIM, ENC_HID_DIM, DEC_HID_DIM, DEC_DROPOUT, attn)
 
-    model = Seq2Seq(enc, dec, device).to(device)
+    model = Seq2Seq(enc, dec, PAD_IDX, device).to(device)
     # model preparation
     model.apply(init_weights)
     logging.info(f'The model has {count_parameters(model):,} trainable parameters')
 
     # create optimizer
-    optimizer = Optimizer(bnb.optim.Adam(model.parameters()), max_grad_norm=5)
+    optimizer = Optimizer(bnb.optim.AdamW(model.parameters()), max_grad_norm=0)
     scheduler = StepLR(optimizer.optimizer, 1)
     optimizer.set_scheduler(scheduler)
     

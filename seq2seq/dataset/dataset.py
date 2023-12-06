@@ -33,4 +33,4 @@ class ViDataset(Dataset):
         source_indices = [self.vocab[word] for word in source_tokenize]
         target_indices = [self.vocab[word] for word in target_tokenize]
 
-        return torch.tensor(source_indices, dtype=torch.long), torch.tensor(target_indices, dtype=torch.long)
+        return source_indices, target_indices
