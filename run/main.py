@@ -66,19 +66,9 @@ parser.add_argument('--log-level', dest='log_level',
                     help='Logging level.')
 
 opt = parser.parse_args()
-# opt.batch_size = int(opt.batch_size)
-# opt.num_epochs = int(opt.num_epochs)
-# opt.checkpoint_every = int(opt.checkpoint_every)
-
-import os
-
-opt.batch_size = 2
-opt.num_epochs = 100
-opt.src_train_path = "/home/hinetabi/Documents/university/data/sample/data/train_src.txt"
-opt.tgt_train_path = "/home/hinetabi/Documents/university/data/sample/data/train_tgt.txt"
-opt.vocab_path = "tests/data/vocab.pth"
-opt.src_val_path = "/home/hinetabi/Documents/university/data/sample/data/val_src.txt"
-opt.tgt_val_path = "/home/hinetabi/Documents/university/data/sample/data/val_tgt.txt"
+opt.batch_size = int(opt.batch_size)
+opt.num_epochs = int(opt.num_epochs)
+opt.checkpoint_every = int(opt.checkpoint_every)
 
 
 

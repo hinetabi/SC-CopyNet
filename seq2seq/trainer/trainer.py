@@ -82,6 +82,8 @@ class SupervisedTrainer(object):
         del src
         del src_len
         del trg
+        gc.collect()
+        torch.cuda.empty_cache()
         
         return loss_item
 
