@@ -2,14 +2,10 @@ from __future__ import division
 import logging
 import os
 import random
-import time
 import gc
 
 import torch
-import torchtext
-from torch import optim
 from torch.nn import CrossEntropyLoss
-from torch.utils.data import DataLoader
 
 from seq2seq.evaluator import Evaluator
 from seq2seq.util.checkpoint import Checkpoint
@@ -83,11 +79,6 @@ class SupervisedTrainer(object):
         loss_item = loss.item()
         model.encoder.zero_grad()
         model.decoder.zero_grad()
-        del output
-        del loss
-        del src
-        del trg
-        gc.collect()
         
         return loss_item
 
@@ -123,6 +114,7 @@ class SupervisedTrainer(object):
                 del src_len
                 del trg
                 gc.collect()
+                torch.cuda.empty_cache()
                 
                 # Record average loss
                 print_loss_total += loss
@@ -194,10 +186,6 @@ class SupervisedTrainer(object):
 
         self.logger.info("Optimizer: %s, Scheduler: %s" % (self.optimizer.optimizer, self.optimizer.scheduler))
 
-        # set 
-        torch.autograd.profiler.emit_nvtx(enabled=False)
-        torch.autograd.set_detect_anomaly(False)
-        
         self._train_epoches(train_iter, model, num_epochs,
                             start_epoch, step, val_iter=val_iter,vi_vocab=vi_vocab)
                             
