@@ -52,8 +52,8 @@ class SupervisedTrainer(object):
     def _train_batch(self, model, src, src_len, trg, clip = 1):
         self.optimizer.optimizer.zero_grad(set_to_none=True)
         
-        # for param in model.parameters():
-        #     param.grad = None
+        for param in model.parameters():
+            param.grad = None
             
         output = model(src=src, src_len=src_len, trg=trg)
 
@@ -77,8 +77,11 @@ class SupervisedTrainer(object):
         self.optimizer.step()
         
         loss_item = loss.item()
-        model.encoder.zero_grad()
-        model.decoder.zero_grad()
+        # model.encoder.zero_grad()
+        # model.decoder.zero_grad()
+        del src
+        del src_len
+        del trg
         
         return loss_item
 

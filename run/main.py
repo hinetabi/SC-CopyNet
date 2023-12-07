@@ -34,16 +34,16 @@ raw_input = input  # Python 3
 #      python run/sample.py --train_path $TRAIN_PATH --dev_path $DEV_PATH --expt_dir $EXPT_PATH --load_checkpoint $CHECKPOINT_DIR
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--src-train-path', action='store', dest='src_train_path',required=True,
+parser.add_argument('--src-train-path', action='store', dest='src_train_path',required=False,
                     help='Path to source train data')
-parser.add_argument('--tgt-train-path', action='store', dest='tgt_train_path',required=True,
+parser.add_argument('--tgt-train-path', action='store', dest='tgt_train_path',required=False,
                     help='Path to target train data')
 parser.add_argument('--src-val-path', action='store', dest='src_val_path',required=False,
                     help='Path to source test data')
 parser.add_argument('--tgt-val-path', action='store', dest='tgt_val_path',required=False,
                     help='Path to target test data')
 
-parser.add_argument('--vocab-path', action='store', dest='vocab_path',required=True,
+parser.add_argument('--vocab-path', action='store', dest='vocab_path',required=False,
                     help='Path to vocab file (.pth)')
 
 parser.add_argument('--expt-dir', action='store', dest='expt_dir', default='./experiment',
@@ -66,9 +66,21 @@ parser.add_argument('--log-level', dest='log_level',
                     help='Logging level.')
 
 opt = parser.parse_args()
-opt.batch_size = int(opt.batch_size)
-opt.num_epochs = int(opt.num_epochs)
-opt.checkpoint_every = int(opt.checkpoint_every)
+# opt.batch_size = int(opt.batch_size)
+# opt.num_epochs = int(opt.num_epochs)
+# opt.checkpoint_every = int(opt.checkpoint_every)
+
+import os
+
+opt.batch_size = 2
+opt.num_epochs = 100
+opt.src_train_path = "/home/hinetabi/Documents/university/data/sample/data/train_src.txt"
+opt.tgt_train_path = "/home/hinetabi/Documents/university/data/sample/data/train_tgt.txt"
+opt.vocab_path = "tests/data/vocab.pth"
+opt.src_val_path = "/home/hinetabi/Documents/university/data/sample/data/val_src.txt"
+opt.tgt_val_path = "/home/hinetabi/Documents/university/data/sample/data/val_tgt.txt"
+
+
 
 LOG_FORMAT = '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
 logging.basicConfig(format=LOG_FORMAT, level=getattr(logging, opt.log_level.upper()))

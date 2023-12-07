@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "env": {
+                "SRC_TRAIN_FILE": "/home/hinetabi/Documents/university/data/sample/data/train_src.txt",
+                "TGT_TRAIN_FILE": "/home/hinetabi/Documents/university/data/sample/data/train_tgt.txt",
+                "SRC_VAL_PATH": "/home/hinetabi/Documents/university/data/sample/data/val_src.txt",
+                "TGT_VAL_PATH": "/home/hinetabi/Documents/university/data/sample/data/val_tgt.txt",
+
+                "VOCAB_PATH": "tests/data/vocab.pth",
+                "CHECKPOINT_DIR": "/home/hinetabi/Documents/university/copynet/SC-CopyNet/experiment/checkpoints",
+                "EXPT_DIR": "/home/hinetabi/Documents/university/copynet/SC-CopyNet/experiment",
+                "BATCH_SIZE": "1",
+                "NUM_EPOCHS": "100"
+            }
+        }
+    ]
+}
