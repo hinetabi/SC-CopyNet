@@ -144,7 +144,7 @@ else:
     logging.info(f'The model has {count_parameters(model):,} trainable parameters')
 
     # create optimizer
-    optimizer = Optimizer(bnb.optim.AdamW(model.parameters()), max_grad_norm=0)
+    optimizer = Optimizer(bnb.optim.AdamW(model.parameters(), lr = 0.003), max_grad_norm=0)
     scheduler = StepLR(optimizer.optimizer, 1)
     optimizer.set_scheduler(scheduler)
     

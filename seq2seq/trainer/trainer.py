@@ -3,6 +3,7 @@ import logging
 import os
 import random
 import time
+import gc
 
 import torch
 import torchtext
@@ -86,6 +87,7 @@ class SupervisedTrainer(object):
         del loss
         del src
         del trg
+        gc.collect()
         
         return loss_item
 
@@ -117,7 +119,11 @@ class SupervisedTrainer(object):
 
                 src, src_len, trg = batch
                 loss = self._train_batch(model, src, src_len, trg, clip=1)
-
+                del src
+                del src_len
+                del trg
+                gc.collect()
+                
                 # Record average loss
                 print_loss_total += loss
                 epoch_loss_total += loss
