@@ -10,8 +10,6 @@ BATCH_SIZE = 128
 def generate_batch(data_batch, BOS_IDX, EOS_IDX, PAD_IDX, device):
     de_batch, en_batch, src_len = [], [], []
     
-    data_batch.sort(key=lambda x: len(x[0]), reverse=True)
-    
     for data in data_batch:
         de_item, en_item = data[0], data[1]
         de_batch.append(torch.cat([torch.tensor([BOS_IDX], device=device), torch.tensor(de_item, dtype=torch.long, device=device), torch.tensor([EOS_IDX], device=device)], dim=0))

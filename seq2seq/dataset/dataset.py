@@ -11,13 +11,22 @@ class ViDataset(Dataset):
         self.vocab = vocab
         
         with open(src_path, encoding="utf-8") as f:
-            self.raw_src_iter = f.readlines()
+            src = f.readlines()
 
         with open(tgt_path, encoding="utf-8") as f:
-            self.raw_tgt_iter = f.readlines()
+            tgt = f.readlines()
+
+        # Combine src and tgt into pairs
+        combined_data = list(zip(src, tgt))
+
+        # Sort based on the length of src (you can use len(src) or len(tgt) depending on your preference)
+        sorted_data = sorted(combined_data, key=lambda x: len(x[0]), reverse=True)
+
+        # Unpack the sorted data back into separate src and tgt lists
+        self.raw_src_iter, self.raw_tgt_iter = zip(*sorted_data)
             
         assert len(self.raw_src_iter) == len(self.raw_tgt_iter), "Source and Target file should have the same length."
-
+        
     def __len__(self):
         return len(list(self.raw_src_iter))
 
