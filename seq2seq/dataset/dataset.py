@@ -20,7 +20,7 @@ class ViDataset(Dataset):
         combined_data = list(zip(src, tgt))
 
         # Sort based on the length of src (you can use len(src) or len(tgt) depending on your preference)
-        sorted_data = sorted(combined_data, key=lambda x: len(x[0]), reverse=True)
+        sorted_data = sorted(combined_data, key=lambda x: len(tokenize(x[0])), reverse=True)
 
         # Unpack the sorted data back into separate src and tgt lists
         self.raw_src_iter, self.raw_tgt_iter = zip(*sorted_data)

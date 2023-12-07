@@ -1,3 +1,7 @@
+import sys
+
+sys.path.append("./")
+
 from seq2seq.dataset.dataset import ViDataset
 from seq2seq.dataset.vocab import VietVocab
 
